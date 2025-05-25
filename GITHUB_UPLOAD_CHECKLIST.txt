@@ -1,0 +1,91 @@
+FILES TO UPLOAD TO GITHUB
+=========================
+
+Total Files: 47 (including new and updated)
+
+CRITICAL UPDATES (Must upload):
+
+Backend Files:
+✓ backend/models/consumable.model.js - NEW SCHEMA with units
+✓ backend/models/task.model.js - Updated for single recurring tasks
+✓ backend/routes/consumable.routes.js - Fixed decrease/refill logic
+✓ backend/routes/task.routes.js - Fixed recurring task behavior
+✓ backend/server.js - Added auto-decrease scheduler
+
+Frontend Files:
+✓ frontend/src/App.js - Complete rewrite with all new features
+✓ frontend/src/components/ConsumableCard.js - Units support
+✓ frontend/src/components/ConsumableModal.js - Units and refill
+✓ frontend/src/components/TaskItem.js - Dark mode support
+✓ frontend/src/index.css - Dark mode styles
+
+New Scripts:
+✓ add-sample-data.sh - Test data generator
+✓ github-sync.sh - GitHub integration helper
+✓ complete-fix.sh - Fix for LXC issues
+✓ quick-fix.sh - Common problem solver
+✓ simple-vm-setup.sh - Easiest VM installation
+
+Updated Scripts:
+✓ pre-install.sh - Fixed for VM permissions
+✓ simple-vm-setup.sh - Fixed Node.js installation
+
+Documentation:
+✓ README.md - Updated with v1.1.0 features
+✓ UPDATE_SUMMARY.md - Complete changelog
+✓ UPGRADE_GUIDE.md - Migration instructions
+✓ QUICK_REFERENCE.md - Common commands
+✓ TROUBLESHOOTING.md - Updated with new fixes
+✓ VM_SETUP_GUIDE.txt - Complete VM instructions
+
+UPLOAD PROCESS:
+
+1. On Windows (D:/consumable-tracker):
+   ```
+   git add -A
+   git commit -m "v1.1.0 - Major update with units, dark mode, views"
+   git push origin main
+   ```
+
+2. On VM (/opt/consumable-tracker):
+   ```
+   # Stop current version
+   docker-compose down
+   
+   # Pull updates
+   git pull origin main
+   
+   # Rebuild
+   ./pre-install.sh
+   ./install.sh
+   
+   # Test
+   ./add-sample-data.sh
+   ```
+
+KEY IMPROVEMENTS IN v1.1.0:
+
+1. Units System - No more percentages!
+2. Auto-decrease actually works
+3. Dark mode for better visibility
+4. Multiple views (grid/list/all)
+5. Sorting options
+6. Fixed recurring tasks
+7. Better refill workflow
+8. VM installation improvements
+9. Complete documentation
+
+BREAKING CHANGES:
+- Database schema changed
+- No automatic migration
+- Need to re-enter data with proper units
+
+NEXT FEATURES (v1.2.0):
+- n8n integration for alerts
+- Data export/import
+- Multi-user support
+- Voice assistant integration
+- Mobile app
+
+Remember to update your GitHub repo description:
+"Self-hosted consumable and task tracker with automatic depletion, dark mode, and multi-unit support"

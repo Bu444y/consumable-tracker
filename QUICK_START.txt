@@ -1,0 +1,37 @@
+CONSUMABLE TRACKER - QUICK START GUIDE
+======================================
+
+INSTALLATION (Ubuntu/Linux):
+1. Ensure Docker and Docker Compose are installed
+2. Make scripts executable: chmod +x *.sh
+3. Run: ./pre-install.sh (generates package-lock.json files)
+4. Run: ./install.sh
+5. Access at: http://localhost:3000
+
+HAVING ISSUES?
+- Run: ./quick-fix.sh (fixes most common problems)
+- See TROUBLESHOOTING.md for detailed solutions
+
+BASIC USAGE:
+- Consumables: Track household items with automatic depletion
+- Tasks: Manage recurring chores and maintenance
+- Categories: Organize items by location/type
+
+DAILY OPERATIONS:
+- Check health: ./health-check.sh
+- View logs: ./logs.sh
+- Create backup: ./backup.sh
+- Restore data: ./restore.sh
+
+TROUBLESHOOTING:
+- Service issues: docker-compose restart
+- Connection errors: Check firewall/ports 3000, 5000, 27017
+- Database issues: ./restore.sh (if you have backups)
+
+UPDATING:
+- Run: ./update.sh (creates automatic backup first)
+
+DEVELOPMENT:
+- Run: ./dev-setup.sh for local development environment
+
+For detailed information, see README.md

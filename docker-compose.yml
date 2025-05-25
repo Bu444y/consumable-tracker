@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: consumable-mongo
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=consumable-tracker
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+    ports:
+      - "27017:27017"
+
+  backend:
+    build: ./backend
+    container_name: consumable-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/consumable-tracker
+      - PORT=5000
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: consumable-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,138 @@
+VM SETUP - COMPLETE GUIDE
+=========================
+
+This guide will help you set up Consumable Tracker on a fresh Ubuntu 22.04 VM.
+
+PREREQUISITES:
+- Ubuntu 22.04 Server VM (2GB RAM, 20GB disk minimum)
+- SSH access to the VM
+- Files ready in D:/consumable-tracker on Windows
+
+STEP-BY-STEP INSTRUCTIONS:
+
+1. CREATE AND ACCESS YOUR VM
+   - Create Ubuntu 22.04 VM in Proxmox
+   - SSH into the VM as a regular user (not root)
+
+2. DOWNLOAD THE SETUP SCRIPT
+   On your VM, run ONE of these options:
+
+   Option A - If you can upload files first:
+   - Upload quick-vm-install.sh to your VM
+   - Run: bash quick-vm-install.sh
+
+   Option B - Direct download (if hosted):
+   - Run: curl -sSL https://yourserver/quick-vm-install.sh | bash
+
+   Option C - Copy and paste:
+   - Copy the contents of quick-vm-install.sh
+   - Run: nano install.sh
+   - Paste the contents
+   - Save and exit (Ctrl+X, Y, Enter)
+   - Run: bash install.sh
+
+3. FOLLOW THE SCRIPT PROMPTS
+   The script will:
+   - Install Docker, Docker Compose, and Node.js
+   - Configure firewall
+   - Create /opt/consumable-tracker directory
+   - Prepare for file upload
+
+4. AFTER DOCKER INSTALLATION
+   If Docker was just installed, you MUST:
+   - Exit SSH: exit
+   - SSH back into the VM
+   - Continue to step 5
+
+5. UPLOAD APPLICATION FILES
+   Using WinSCP or similar:
+   - Connect to your VM
+   - Navigate to /opt/consumable-tracker
+   - Upload ALL files from D:/consumable-tracker
+   - Include all subdirectories (backend/, frontend/, etc.)
+
+6. COMPLETE THE INSTALLATION
+   On the VM:
+   - cd /opt/consumable-tracker
+   - chmod +x *.sh
+   - ./pre-install.sh
+   - ./install.sh
+
+7. VERIFY INSTALLATION
+   - Run: ./health-check.sh
+   - All services should show as healthy
+
+8. ACCESS THE APPLICATION
+   - Find your VM IP: hostname -I
+   - Open browser: http://YOUR_VM_IP:3000
+   - API endpoint: http://YOUR_VM_IP:5000/api
+
+TROUBLESHOOTING:
+
+If "Failed to load data":
+- Check: docker ps (all 3 containers should be running)
+- Check logs: docker-compose logs backend
+- Test API: curl http://localhost:5000/health
+
+If npm errors during install:
+- Run: ./fix-npm-build.sh
+- Or try: ./complete-fix.sh
+
+If nothing works:
+- Run: ./cleanup.sh
+- Start over from step 6
+
+ENABLING AUTO-START:
+To start the app automatically when VM boots:
+
+1. Create systemd service:
+   sudo nano /etc/systemd/system/consumable-tracker.service
+
+2. Add this content:
+   [Unit]
+   Description=Consumable Tracker
+   After=docker.service
+   Requires=docker.service
+
+   [Service]
+   Type=oneshot
+   RemainAfterExit=yes
+   WorkingDirectory=/opt/consumable-tracker
+   ExecStart=/usr/local/bin/docker-compose up -d
+   ExecStop=/usr/local/bin/docker-compose down
+   User=YOUR_USERNAME
+
+   [Install]
+   WantedBy=multi-user.target
+
+3. Replace YOUR_USERNAME with your actual username
+
+4. Enable service:
+   sudo systemctl daemon-reload
+   sudo systemctl enable consumable-tracker
+   sudo systemctl start consumable-tracker
+
+USEFUL COMMANDS:
+- View logs: docker-compose logs -f
+- Stop app: docker-compose down
+- Start app: docker-compose up -d
+- Restart app: docker-compose restart
+- Backup data: ./backup.sh
+- Update app: ./update.sh
+
+NEXT STEPS:
+1. Create your first consumable category
+2. Add some items to track
+3. Set up recurring tasks
+4. Configure alerts (future feature)
+
+TIPS:
+- The app automatically decreases consumable amounts daily
+- Tasks can recur daily, weekly, or monthly
+- All data is stored in MongoDB (Docker volume)
+- Backups are stored in ./backups/
+
+For additional help, see:
+- README.md - Full documentation
+- TROUBLESHOOTING.md - Common issues
+- API_DOCUMENTATION.md - API reference

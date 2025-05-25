@@ -1,0 +1,49 @@
+DEPLOYMENT CHECKLIST
+====================
+
+Before Installation:
+□ Docker installed and running
+□ Docker Compose installed
+□ Ports 3000, 5000, 27017 available
+□ At least 2GB free disk space
+□ Ubuntu Server 22.04 or compatible OS
+
+Installation Steps:
+□ Upload files to server via WinSCP
+□ SSH into server
+□ Navigate to consumable-tracker directory
+□ Make scripts executable: chmod +x *.sh
+□ Run pre-installation: ./pre-install.sh
+□ Run installation: ./install.sh
+□ Verify all services started successfully
+□ If issues occur, run: ./quick-fix.sh
+
+Post-Installation:
+□ Access web interface at http://[server-ip]:3000
+□ Create first consumable item
+□ Create first task
+□ Test backup script: ./backup.sh
+□ Set up cron job for maintenance (optional)
+
+Security Checklist:
+□ Configure firewall rules if needed
+□ Change default ports in docker-compose.yml if required
+□ Set up HTTPS with reverse proxy (nginx/traefik)
+□ Restrict MongoDB port to localhost only
+
+Maintenance Setup (Optional):
+□ Add to crontab for daily maintenance:
+  0 2 * * * /path/to/consumable-tracker/maintenance.sh
+□ Add to crontab for weekly backup:
+  0 3 * * 0 /path/to/consumable-tracker/backup.sh
+
+Integration Planning:
+□ Plan n8n workflows for alerts
+□ Design API integration for voice assistants
+□ Set up notification channels (email/Telegram)
+
+Troubleshooting Resources:
+- Logs: ./logs.sh
+- Health check: ./health-check.sh
+- Reset if needed: ./reset.sh
+- Community support: [GitHub Issues]

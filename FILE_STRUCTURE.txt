@@ -1,0 +1,64 @@
+CONSUMABLE TRACKER - FILE STRUCTURE
+===================================
+
+Root Directory Files:
+- docker-compose.yml          # Docker orchestration configuration
+- install.sh                  # Main installation script
+- pre-install.sh             # Package-lock.json generator
+- cleanup.sh                 # Clean removal script
+- health-check.sh            # Service health monitoring
+- backup.sh                  # Database backup script
+- restore.sh                 # Database restore script
+- update.sh                  # Application update script
+- logs.sh                    # Log viewer utility
+- maintenance.sh             # Automated maintenance tasks
+- dev-setup.sh              # Development environment setup
+- reset.sh                  # Complete reset/uninstall
+- README.md                  # Main documentation
+- API_DOCUMENTATION.md       # API reference
+- QUICK_START.txt           # Quick reference guide
+- DEPLOYMENT_CHECKLIST.txt  # Deployment checklist
+- TROUBLESHOOTING.md        # Common issues and solutions
+- .env.example              # Environment variables template
+- .gitignore                # Git ignore rules
+
+Backend Directory (/backend):
+- Dockerfile                 # Backend Docker configuration
+- package.json              # Node.js dependencies
+- server.js                 # Express server setup
+- /models:
+  - category.model.js       # Category schema
+  - consumable.model.js     # Consumable schema
+  - task.model.js          # Task schema
+- /routes:
+  - category.routes.js      # Category API routes
+  - consumable.routes.js    # Consumable API routes
+  - task.routes.js         # Task API routes
+
+Frontend Directory (/frontend):
+- Dockerfile                # Frontend Docker configuration
+- package.json             # React dependencies
+- nginx.conf               # Nginx configuration
+- /public:
+  - index.html             # HTML entry point
+- /src:
+  - index.js               # React entry point
+  - index.css              # Global styles
+  - App.js                 # Main React component
+  - /services:
+    - api.js               # API client configuration
+  - /components:
+    - LoadingSpinner.js    # Loading indicator
+    - ErrorMessage.js      # Error display
+    - ConsumableCard.js    # Consumable item display
+    - TaskItem.js          # Task item display
+    - ConsumableModal.js   # Add/edit consumable form
+    - TaskModal.js         # Add/edit task form
+
+Total Files Created: 40
+
+NEXT STEPS:
+1. Upload to Ubuntu server via WinSCP
+2. Run: chmod +x *.sh
+3. Run: ./install.sh
+4. Access at http://[server-ip]:3000
